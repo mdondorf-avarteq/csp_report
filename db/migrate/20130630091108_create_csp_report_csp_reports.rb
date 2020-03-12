@@ -1,4 +1,4 @@
-class CreateCspReportCspReports < ActiveRecord::Migration
+class CreateCspReportCspReports < ActiveRecord::Migration[5.2]
   def change
     create_table :csp_report_csp_reports do |t|
       t.string :document_uri       , null: false

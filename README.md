@@ -8,14 +8,14 @@ As of today (Sept 14th), a new editor's draft of CSP 1.1 is available and got
 rid of the new proposed report elements. Therefore, as of today too, I'll
 publish the current version of the gem as the csp_report 1.0 version.
 
-[Installation](#install) | [Upgrade](#upgrade-notes) | 
+[Installation](#install) | [Upgrade](#upgrade-notes) |
 [Configuration](#trying-it-out) | [Description](#what-is-csp)
 
 **Careful**: If migrating from an earlier version, please look up the upgrage
 instructions.
 
-Now that v1.0 is out, I would advise to redo an install from scratch or to 
-consult the new [INSTALL](./INSTALL.md) file for details of what should be 
+Now that v1.0 is out, I would advise to redo an install from scratch or to
+consult the new [INSTALL](./INSTALL.md) file for details of what should be
 installed
 
 What is CSP
@@ -48,20 +48,20 @@ Why using this gem
 ==================
 
 CSP is yet another layer of protection, basically relying on the browser to do
-some level of control. This is a way to prevent some man in the middle attack 
+some level of control. This is a way to prevent some man in the middle attack
 where someone intercepts the server response and try to change it. While not
 foolproof, it's a good additional security layer.
 
 This gem comes in handy for 2 reasons:
-* First, when activating CSP directives on your existing site, it is likely 
+* First, when activating CSP directives on your existing site, it is likely
 that you'll have a hard
 time figuring out all the sources you are using. By recording all the breaches,
- this gem allows you to setup a policy, run a crawler for example, and then 
-look at what is reported as breaches. It will help you getting rid of your 
+ this gem allows you to setup a policy, run a crawler for example, and then
+look at what is reported as breaches. It will help you getting rid of your
 inline js and tuning your policy.
-* Second, in normal production mode, it'll help you monitor the situation and 
-see if your server has been victim of some injection (if some input is not 
-sanitize properly) or if your users are being attacked in some way (in which 
+* Second, in normal production mode, it'll help you monitor the situation and
+see if your server has been victim of some injection (if some input is not
+sanitize properly) or if your users are being attacked in some way (in which
 case you might gather stats and maybe warn them in one way or another).
 
 Install
@@ -75,16 +75,16 @@ _(See the [INSTALL.md](./INSTALL.md) file for more details)_
 ```
 Don't forget to run `bundle install` afterwards
 
-1. Run the generator. The engine mount point is configurable. By default it will be 
+1. Run the generator. The engine mount point is configurable. By default it will be
 **/csp** but you can change that to your liking by passing a parameter to the
-install generator  
+install generator
 If you want to run the easy install step just after, you can now pass the -a
 param to the install generator and it will execute the csp_declaration generator
 too
 ```shell
 	rails generate csp_report:install [mount_point_name] [-a]
 ```
-Among other things, it retrieves the db migration files from the gem and copy them in the application  
+Among other things, it retrieves the db migration files from the gem and copy them in the application
 *Don't forget to run the `rake db:migrate` command*
 
 1. **EASY INSTALL**: if you used the *-a* parameter above, you can skip this
@@ -96,7 +96,7 @@ Execute
 ```
 You can then customize the directive in the ApplicationController.
 
-1. *(If you have not followed the previous step and not used the -a parameter)* 
+1. *(If you have not followed the previous step and not used the -a parameter)*
 You need to configure a CSP on your server response, with the *report_uri*
 parameters pointing to the configured REST resource above. Following the setup
 above, one solution is to find this in your application_controller.rb file:
@@ -104,8 +104,8 @@ above, one solution is to find this in your application_controller.rb file:
 	class ApplicationController
 		protect_from_forgery
 
-		before_filter :csp
-	
+		before_action :csp
+
 		def csp
 			response.headers['Content-Security-Policy'] = "script-src 'self'; report-uri /csp/csp_reports"
 		end
@@ -129,7 +129,7 @@ not authorized. Just put some
 ```
 
 in one of your HTML rendered file and launch it in a browser. If the setup is
-correct and you browser supports CSP, the script will not play (no pop-up) and 
+correct and you browser supports CSP, the script will not play (no pop-up) and
 you'll have one more record in the /csp/csp_reports list.
 
 Tuning the engine
@@ -150,7 +150,7 @@ have to redefine every single one of them.
 
 #### Changing the CSP rule per controller/action
 
-This is not tested, but by adding a before_filter to any of your controller,
+This is not tested, but by adding a before_action to any of your controller,
 you should be able to override the application level CSP directive.
 
 TODO - gbataille - Test it
@@ -158,7 +158,7 @@ TODO - gbataille - Test it
 Utilities
 =========
 
-* For general usage, a constant CspReport::MOUNT_POINT is defined with the 
+* For general usage, a constant CspReport::MOUNT_POINT is defined with the
 namespace provided while running the install generator. This constant is
 typically used in the response header construction.
 * For "plugability", as for any engine, rails gives some helper objects. While

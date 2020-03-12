@@ -1,4 +1,4 @@
-class AddIncomingIpToCspReportCspReports < ActiveRecord::Migration
+class AddIncomingIpToCspReportCspReports < ActiveRecord::Migration[5.2]
   def change
     add_column :csp_report_csp_reports, :incoming_ip, :string, null: true
 

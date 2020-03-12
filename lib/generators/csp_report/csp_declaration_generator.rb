@@ -6,7 +6,7 @@ module CspReport
         after: "ApplicationController < ActionController::Base\n" do
 <<-CONTENT
 
-  before_filter :csp
+  before_action :csp
 
   def csp
     policy =  "default *;"
